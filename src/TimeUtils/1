@@ -1,0 +1,59 @@
+CXX = gcc
+CFLAG = -g
+
+objects := Calculate.o hello.o
+all:$(objects)
+
+lib_dir = AS7_64 
+$(objects): %.o:%.cpp
+	mkdir $(lib_dir)
+
+hello.o: Calculate.o hello.cpp
+	echo Target Name = $@
+	echo All prerequisite = $^ 
+	@g++ -o hello hello.cpp Calculate.o
+	
+Calculate.o: Calculate.cpp
+
+run: hello.o
+	./hello
+
+clean:
+	rm -f $(objects)
+
+obj_files := $(wildcard *.o) $(wildcard *.result)
+src_files := $(wildcard *.cpp) $(wildcard *.raw)
+all_filter:$(obj_files)
+.PHONY:all_filter
+
+$(filter %.cpp, $(obj_files)): %.o:%.cpp
+	echo "Target : $@ , prereq : $^"
+
+$(filter %.result, $(obj_files)): %.result:%.raw
+	echo "Target : $@ , prereq : $^"
+
+ptStatement := printing cpp files
+print: $(wildcard *.cpp)
+	echo $ptStatement
+	ls -lh $?
+
+omsgui = $(Include)/omsgui
+msg = $(Include)/msg
+
+Include = ssoms/include
+
+test_variables: one = I am only defined here
+test_variables:
+	@echo $(omsgui)
+	@echo $(msg)
+	@echo $(one)
+
+conditions:
+	branch = master
+	main = master
+	ifeq($(branch),$(main))
+		@echo Don't push anything , you are on master
+	else
+		@echo git push -u origin $(branch)
+	endif
+	@echo $(MAKEFLAGS)
