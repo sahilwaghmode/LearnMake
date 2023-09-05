@@ -10,7 +10,7 @@ $(BUILD_DIR)/$(TARGET_EXEC):$(OBJ_FILES)
 	ar rcs $@.a $(OBJ_FILES)
 $(BUILD_DIR)/%.cpp.o:%.cpp
 	mkdir -p $(dir $@)
-	$(CXX) $(CPPFlAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFlAGS) $(INCLUDES)  $(CXXFLAGS) -c $< -o $@
 
 
 print: 

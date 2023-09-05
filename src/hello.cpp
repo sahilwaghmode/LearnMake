@@ -1,4 +1,5 @@
 #include<iostream>
+#include"time.h"
 using namespace std;
 
 void CalculateDate();
@@ -9,5 +10,8 @@ int main()
 	cout << i << endl;
 	cout << "Hello Mac !" << endl;
 	 CalculateDate();
+	TimeUtils::now();
+//	TimeUtils::systemTime();
+//	TimeUtils::strTime();
 	return 0;
 }
